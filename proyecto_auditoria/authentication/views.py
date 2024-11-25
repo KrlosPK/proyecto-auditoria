@@ -20,9 +20,15 @@ def login_user(request):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
+        year = request.POST.get("year")
+        period = request.POST.get("period")
+
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
+            request.session["año_control"] = year
+            request.session["periodo_control"] = period
+
             auth_login(request, user)
             return redirect("home")
         else:
