@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Auditores(models.Model):
@@ -8,6 +9,8 @@ class Auditores(models.Model):
     telefono = models.CharField(max_length=20)
     cargo = models.CharField(max_length=150)
     area = models.CharField(max_length=150)
+
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="usuarios")
 
     fecha_creacion = models.DateField(auto_now_add=True)
     fecha_actualizacion = models.DateField(auto_now=True)
@@ -29,7 +32,7 @@ class Controles(models.Model):
     preventivo_detectivo = models.CharField(max_length=20)
     objetivo_control = models.TextField()
 
-    auditor_id = models.ForeignKey(Auditores, on_delete=models.CASCADE)
+    auditor = models.ForeignKey(Auditores, on_delete=models.CASCADE)
 
     año_control = models.IntegerField()
     periodo_control = models.IntegerField()
@@ -57,7 +60,7 @@ class Diseño(models.Model):
     responsable_diseño = models.CharField(max_length=150)
     comentarios_diseño = models.TextField()
 
-    control_id = models.ForeignKey(Controles, on_delete=models.CASCADE)
+    control = models.ForeignKey(Controles, on_delete=models.CASCADE)
 
     fecha_creacion = models.DateField(auto_now_add=True)
     fecha_actualizacion = models.DateField(auto_now=True)
@@ -67,16 +70,16 @@ class Diseño(models.Model):
 
 
 class Validaciones_Diseño_Diseño(models.Model):
-    validaciones_diseño_id = models.ForeignKey(
+    validaciones_diseño = models.ForeignKey(
         Validaciones_Diseño, on_delete=models.CASCADE
     )
-    diseño_id = models.ForeignKey(Diseño, on_delete=models.CASCADE)
+    diseño = models.ForeignKey(Diseño, on_delete=models.CASCADE)
 
     fecha_creacion = models.DateField(auto_now_add=True)
     fecha_actualizacion = models.DateField(auto_now=True)
 
     def __str__(self):
-        return self.validaciones_diseño_id
+        return self.validaciones_diseño
 
 
 class Encabezado(models.Model):
@@ -84,7 +87,7 @@ class Encabezado(models.Model):
     total_horas_invertidas = models.IntegerField()
     recursos_consultados = models.TextField()
 
-    control_id = models.ForeignKey(Controles, on_delete=models.CASCADE)
+    control = models.ForeignKey(Controles, on_delete=models.CASCADE)
 
     fecha_elaboracion = models.DateField(auto_now_add=True)
     fecha_actualizacion = models.DateField(auto_now=True)
