@@ -1,3 +1,76 @@
 from django.db import models
 
-# Create your models here.
+
+class Controles(models.Model):
+    nombre_control = models.CharField(max_length=150)
+    codigo_control = models.CharField(max_length=20)
+    estado_control = models.BooleanField(default=True)
+    conclusion_control = models.TextField()
+    descripcion_control = models.TextField()
+    frecuencia_control = models.CharField(max_length=20)
+    clasificacion_control = models.CharField(max_length=20)
+    tipologia_control = models.CharField(max_length=20)
+    descripcion_riesgo = models.TextField()
+    preventivo_detectivo = models.CharField(max_length=20)
+    objetivo_control = models.TextField()
+
+    año_control = models.IntegerField()
+    periodo_control = models.IntegerField()
+
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.nombre_control
+
+
+class Validaciones_Diseño(models.Model):
+    pregunta_validacion = models.CharField(max_length=150)
+    respuesta_validacion = models.CharField(max_length=10, blank=True)
+    explicacion_validacion = models.TextField()
+
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.pregunta_validacion
+
+
+class Diseño(models.Model):
+    responsable_diseño = models.CharField(max_length=150)
+    comentarios_diseño = models.TextField()
+
+    control_id = models.ForeignKey(Controles, on_delete=models.CASCADE)
+
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.responsable_diseño
+
+
+class Validaciones_Diseño_Diseño(models.Model):
+    validaciones_diseño_id = models.ForeignKey(
+        Validaciones_Diseño, on_delete=models.CASCADE
+    )
+    diseño_id = models.ForeignKey(Diseño, on_delete=models.CASCADE)
+
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.validaciones_diseño_id
+
+
+class Encabezado(models.Model):
+    estado = models.CharField(max_length=30)
+    total_horas_invertidas = models.IntegerField()
+    recursos_consultados = models.TextField()
+
+    control_id = models.ForeignKey(Controles, on_delete=models.CASCADE)
+
+    fecha_elaboracion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.estado
