@@ -1,53 +1,98 @@
-<form>
-  <!-- Email input -->
-  <div data-mdb-input-init class="form-outline mb-4">
-    <input type="email" placeholder="john_doe" id="form2Example1" class="form-control" />
-    <label class="form-label" for="form2Example1">Usuario:</label>
+{% extends 'auth_base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<form
+  class="m-auto max-w-5xl bg-slate-700 p-4 rounded-lg text-white align-middle min-w-96"
+  method="post"
+>
+  {% csrf_token %}
+
+  <div class="mb-3">
+    <label
+      for="username"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >Usuario:</label
+    >
+    <input
+      aria-describedby="emailHelp"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      id="username"
+      name="username"
+      placeholder="john_doe"
+    />
   </div>
 
-  <!-- Password input -->
-  <div data-mdb-input-init class="form-outline mb-4">
-    <input type="password" placeholder="Contraseña de Red" id="form2Example2" class="form-control" />
-    <label class="form-label" for="form2Example2">Contraseña</label>
+  <div class="mb-3">
+    <label
+      for="password"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >Contraseña:</label
+    >
+    <input
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      id="password"
+      name="password"
+      type="password" 
+    />
   </div>
 
-  <!-- 2 column grid layout for inline styling -->
-  <div class="row mb-4">
-    <div class="col d-flex justify-content-center">
-      <!-- Checkbox -->
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-        <label class="form-check-label" for="form2Example31"> Remember me </label>
-      </div>
-    </div>
-
-    <div class="col">
-      <!-- Simple link -->
-      <a href="#!">Forgot password?</a>
-    </div>
+  <div class="mb-3">
+    <label
+      for="role"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >Cargo:</label
+    >
+    <select
+      id="role"
+      name="role"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+    >
+      <option value="auditor">Auditor</option>
+    </select>
   </div>
 
-  <!-- Submit button -->
-  <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Sign in</button>
-
-  <!-- Register buttons -->
-  <div class="text-center">
-    <p>Not a member? <a href="#!">Register</a></p>
-    <p>or sign up with:</p>
-    <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-      <i class="fab fa-facebook-f"></i>
-    </button>
-
-    <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-      <i class="fab fa-google"></i>
-    </button>
-
-    <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-      <i class="fab fa-twitter"></i>
-    </button>
-
-    <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-      <i class="fab fa-github"></i>
-    </button>
+  <div class="mb-3">
+    <label
+      for="year"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >Año:</label
+    >
+    <select
+      id="year"
+      name="year"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+    >
+      {% for year in years %}
+      <option value="{{ year }}">{{ year }}</option>
+      {% endfor %}
+    </select>
   </div>
+
+  <div class="mb-3">
+    <label
+      for="period"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >Semestre:</label
+    >
+    <select
+      id="period"
+      name="period"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+    >
+      <option value="1">1</option>
+      <option value="2">2</option>
+    </select>
+  </div>
+
+  <button
+    type="submit"
+    class="text-white w-full text-center bg-[#050708] hover:bg-[#050708]/90 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 items-center dark:focus:ring-[#050708]/50 dark:hover:bg-[#050708]/30 me-2 mb-2"
+  >
+    Ingresar
+  </button>
 </form>
+
+{% endblock %}

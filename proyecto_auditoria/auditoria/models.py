@@ -1,10 +1,25 @@
 from django.db import models
 
 
+class Auditores(models.Model):
+    nombre = models.CharField(max_length=150)
+    apellido = models.CharField(max_length=150)
+    correo = models.EmailField(max_length=150)
+    telefono = models.CharField(max_length=20)
+    cargo = models.CharField(max_length=150)
+    area = models.CharField(max_length=150)
+
+    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_actualizacion = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.nombre
+
+
 class Controles(models.Model):
     nombre_control = models.CharField(max_length=150)
     codigo_control = models.CharField(max_length=20)
-    estado_control = models.BooleanField(default=True)
+    estado_control = models.CharField(max_length=20)
     conclusion_control = models.TextField()
     descripcion_control = models.TextField()
     frecuencia_control = models.CharField(max_length=20)
@@ -13,6 +28,8 @@ class Controles(models.Model):
     descripcion_riesgo = models.TextField()
     preventivo_detectivo = models.CharField(max_length=20)
     objetivo_control = models.TextField()
+
+    auditor_id = models.ForeignKey(Auditores, on_delete=models.CASCADE)
 
     año_control = models.IntegerField()
     periodo_control = models.IntegerField()
