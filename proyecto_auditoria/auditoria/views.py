@@ -27,7 +27,7 @@ def all_controles(request):
 def diseño(request, codigo_control):
     control = get_object_or_404(Controles, codigo_control=codigo_control)
 
-    diseño = Diseño.objects.filter(control_id=control).first()
+    diseño = Diseño.objects.filter(control_id=control.id).first()
 
     validaciones_diseño = Validaciones_Diseño.objects.all()
 
@@ -88,9 +88,8 @@ def diseño(request, codigo_control):
 
                 messages.success(request, "Diseño creado exitosamente.")
 
-            diseño.save()
-
-            # Procesar validaciones
+            # Procesar validaciones y determinar la conclusión
+            conclusion = "No Evaluado"  # Default
             for validacion in validaciones_diseño:
                 respuesta_key = f"answer_{validacion.id}"
                 explicacion_key = f"explanation_{validacion.id}"
@@ -114,6 +113,17 @@ def diseño(request, codigo_control):
                         validacion_diseño_diseño.respuesta_validacion = respuesta
                         validacion_diseño_diseño.explicacion_validacion = explicacion
                         validacion_diseño_diseño.save()
+
+                # Determinar la conclusión
+                if respuesta == "No":
+                    conclusion = "Insatisfactorio"
+                elif respuesta == "No aplica":
+                    conclusion = "Insatisfactorio"
+                elif conclusion != "Insatisfactorio" and respuesta == "Si":
+                    conclusion = "Satisfactorio"
+
+            diseño.conclusion_diseño = conclusion
+            diseño.save()
 
             messages.success(request, "Diseño actualizado exitosamente.")
             return redirect("diseño", codigo_control=codigo_control)
