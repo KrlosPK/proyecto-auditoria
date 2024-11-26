@@ -89,12 +89,13 @@ class Encabezado(models.Model):
     estado = models.CharField(max_length=30)
     total_horas_invertidas = models.IntegerField()
     recursos_consultados = models.TextField()
+    fecha_elaboracion = models.DateField(null=True)
 
     control = models.OneToOneField(
         Controles, on_delete=models.CASCADE, related_name="encabezado"
     )
 
-    fecha_elaboracion = models.DateField(auto_now_add=True)
+    fecha_creacion = models.DateField(auto_now_add=True)
     fecha_actualizacion = models.DateField(auto_now=True)
 
     def __str__(self):
