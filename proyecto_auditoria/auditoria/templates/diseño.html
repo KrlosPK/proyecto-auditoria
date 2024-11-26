@@ -114,21 +114,21 @@
               <td class="px-6 py-4">
                 <select
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  id="answer"
-                  name="answer"
+                  id="answer_{{ validacion.id }}"
+                  name="answer_{{ validacion.id }}"
                 >
-                  <option value="" disabled {% if not encabezado.estado %}selected{% endif %}>Selecciona una respuesta</option>
-                  <option value="Si" {% if encabezado and encabezado.estado == "Sin iniciar" %}selected{% endif %}>Sí</option>
-                  <option value="No" {% if encabezado and encabezado.estado == "Sin iniciar" %}selected{% endif %}>No</option>
-                  <option value="No aplica" {% if encabezado and encabezado.estado == "En proceso" %}selected{% endif %}>No aplica</option>
+                  <option value="" disabled selected>Selecciona una respuesta</option>
+                  <option value="Si">Sí</option>
+                  <option value="No">No</option>
+                  <option value="No aplica">No aplica</option>
                 </select>
               </td>
 
               <td class="px-6 py-4">
                 <textarea
                   class="bg-gray-50 border min-h-24 max-h-48 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  id="design_commments"
-                  name="design_commments"
+                  id="explanation_{{ validacion.id }}"
+                  name="explanation_{{ validacion.id }}"
                   placeholder="---- Justifica tu Respuesta ----"
                 ></textarea>
               </td>

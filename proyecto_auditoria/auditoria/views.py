@@ -1,4 +1,10 @@
-from .models import Controles, Diseño, Encabezado, Validaciones_Diseño
+from .models import (
+    Controles,
+    Diseño,
+    Encabezado,
+    Validaciones_Diseño,
+    Validaciones_Diseño_Diseño,
+)
 from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -22,6 +28,8 @@ def diseño(request, codigo_control):
     control = get_object_or_404(Controles, codigo_control=codigo_control)
 
     diseño = Diseño.objects.filter(control_id=control).first()
+
+    validaciones_diseño = Validaciones_Diseño.objects.all()
 
     errores = {}
 
@@ -68,15 +76,37 @@ def diseño(request, codigo_control):
 
             diseño.save()
 
+            # Procesar validaciones
+            for validacion in validaciones_diseño:
+                respuesta_key = f"answer_{validacion.id}"
+                explicacion_key = f"explanation_{validacion.id}"
+
+                respuesta = request.POST.get(respuesta_key, "").strip()
+                explicacion = request.POST.get(explicacion_key, "").strip()
+
+                # Guardar o actualizar en la tabla pivote
+                if respuesta or explicacion:
+                    validacion_diseño_diseño, created = (
+                        Validaciones_Diseño_Diseño.objects.get_or_create(
+                            diseño=diseño,
+                            validaciones_diseño=validacion,
+                            defaults={
+                                "respuesta_validacion": respuesta,
+                                "explicacion_validacion": explicacion,
+                            },
+                        )
+                    )
+                    if not created:  # Actualizar si ya existe
+                        validacion_diseño_diseño.respuesta_validacion = respuesta
+                        validacion_diseño_diseño.explicacion_validacion = explicacion
+                        validacion_diseño_diseño.save()
+
+            messages.success(request, "Diseño actualizado exitosamente.")
             return redirect("diseño", codigo_control=codigo_control)
         else:
             errores_formateados = "\n".join(errores.values())
 
             messages.error(request, errores_formateados)
-
-            return redirect("diseño", codigo_control=codigo_control)
-
-    validaciones_diseño = Validaciones_Diseño.objects.all()
 
     return render(
         request,
