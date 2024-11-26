@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2 class="text-center text-3xl font-bold mb-4">Prueba de Diseño</h2>
+  <h2 class="text-center text-3xl font-bold mb-4">Encabezado del Control</h2>
 
   <!-- Control Data -->
   <div class="p-6 shadow-md border-gray-200 rounded-lg dark:border-gray-700 mb-4">
@@ -27,10 +27,10 @@
 
     <div class="mb-3">
       <label
-        for="test_execution_date"
+        for="production_date"
         class="block mb-2 text-sm font-medium text-gray-900"
       >
-        Fecha ejecución de la prueba:
+        Fecha Elaboración:
       </label>
 
       <div class="relative max-w-sm">
@@ -44,53 +44,77 @@
           autocomplete="off"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
           datepicker
-          id="test_execution_date"
-          name="test_execution_date"
+          id="production_date"
+          name="production_date"
           placeholder="mm/dd/yyyy"
           type="text"
-          value="{{ diseño.fecha_ejecucion_prueba|date:'m/d/Y' }}"
+          value="{{ encabezado.fecha_elaboracion|date:'m/d/Y' }}"
         >
       </div>
     </div>
 
     <div class="mb-3">
       <label
-        for="design_responsible"
+        for="state"
         class="block mb-2 text-sm font-medium text-gray-900"
       >
-        Nombre/Cargo/Area con quien se ejecutó la prueba:
+        Estado:
+      </label>
+
+      {{ encabezado.estado }}
+      <select
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        id="state"
+        name="state"
+        value="{{ encabezado.estado|default:'' }}"
+      >
+        <option value="" disabled selected>Selecciona un estado</option>
+        <option value="Sin iniciar">Sin Iniciar</option>
+        <option value="En proceso">En Proceso</option>
+        <option value="Terminado">Terminado</option>
+        <option value="No Evaluado">No Evaluado</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label
+        for="total_hours_invested"
+        class="block mb-2 text-sm font-medium text-gray-900"
+      >
+        Total Horas invertidas:
       </label>
 
       <input
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        id="design_responsible"
-        name="design_responsible"
-        placeholder="Ingrese Nombre - Cargo y Gerencia con quien ejecuta la prueba"
-        value="{{ diseño.responsable_diseño|default:'' }}"
+        id="total_hours_invested"
+        name="total_hours_invested"
+        placeholder="Ingresa un número"
+        type="number"
+        value="{{ diseño.total_horas_invertidas|default:'' }}"
       />
     </div>
 
     <div class="mb-3">
       <label
-        for="design_commments"
+        for="resources_consulted"
         class="block mb-2 text-sm font-medium text-gray-900"
       >
-        Comentarios sobre prueba de recorrido (resultados consulta en el portal de procesos sobre la documentación del control e Indicar la fecha/transacción/movimiento con la que se hizo la prueba de recorrido):
+        Recursos Consultados:
       </label>
 
       <input
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        id="design_commments"
-        name="design_commments"
-        placeholder="Desarrollo paso a paso de la prueba o recorrido -- ó -- Ruta donde guardaste el Video o documento, Ejemplo: MM\GA SERVICIOS\"
-        value="{{ diseño.comentarios_diseño|default:'' }}"
+        id="resources_consulted"
+        name="resources_consulted"
+        placeholder="Respuesta Obligatoria para dar por finalizado el control"
+        value="{{ diseño.recursos_consultados|default:'' }}"
       />
     </div>
 
     <button
       class="text-white text-center bg-[#050708] hover:bg-[#050708]/90 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 items-center dark:focus:ring-[#050708]/50 me-2 mb-2"
     >
-      {% if diseño %}
+      {% if encabezado %}
         Actualizar
       {% else %}
         Guardar
