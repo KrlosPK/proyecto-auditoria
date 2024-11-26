@@ -66,20 +66,25 @@ DB_PORT="5432"
 5: Realiza las migraciones:
 
 ``` bash
-  python .\manage.py makemigrations
+  cd proyecto_auditoria
+```
+
+6: Realiza las migraciones:
+
+``` bash
   python .\manage.py migrate
 ```
 
-6: Crea un superusuario:
+7: Crea un superusuario:
 
 ``` bash
   python .\manage.py createsuperuser
 ```
 
-7: Inicia el servidor de desarrollo:
+8: Inicia el servidor de desarrollo:
 
 ``` bash
   python .\manage.py runserver
 ```
 
-8: [Accede a la aplicación en tu navegador dando click en este enlace](http://127.0.0.1:8000)
+9: [Accede a la aplicación en tu navegador dando click en este enlace](http://127.0.0.1:8000)
