@@ -1,4 +1,4 @@
-from .models import Controles, Diseño, Encabezado
+from .models import Controles, Diseño, Encabezado, Validaciones_Diseño
 from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -76,10 +76,17 @@ def diseño(request, codigo_control):
 
             return redirect("diseño", codigo_control=codigo_control)
 
+    validaciones_diseño = Validaciones_Diseño.objects.all()
+
     return render(
         request,
         "diseño.html",
-        {"control": control, "diseño": diseño, "errores": errores},
+        {
+            "control": control,
+            "diseño": diseño,
+            "errores": errores,
+            "validaciones_diseño": validaciones_diseño,
+        },
     )
 
 

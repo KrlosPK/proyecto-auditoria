@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2 class="text-center text-3xl font-bold mb-4">Prueba de Diseño</h2>
+  <h2 class="mb-4 text-3xl font-bold text-center">Prueba de Diseño</h2>
 
   <!-- Control Data -->
-  <div class="p-6 shadow-md border-gray-200 rounded-lg dark:border-gray-700 mb-4">
+  <div class="p-6 mb-4 border-gray-200 rounded-lg shadow-md dark:border-gray-700">
     <ul>
       <li class="flex flex-col gap-1 mb-2">
         <b>ID:</b> <span>{{ control.codigo_control }}</span>
@@ -20,11 +20,12 @@
     </ul>
   </div>
 
-  <h2 class="text-center text-3xl font-bold mb-4">Ingresa aquí tu información</h2>
+  <h2 class="mb-4 text-3xl font-bold text-center">Ingresa aquí tu información</h2>
 
   <form method="post">
     {% csrf_token %}
 
+    <!-- Información Diseño -->
     <div class="mb-3">
       <label
         for="test_execution_date"
@@ -78,14 +79,65 @@
         Comentarios sobre prueba de recorrido (resultados consulta en el portal de procesos sobre la documentación del control e Indicar la fecha/transacción/movimiento con la que se hizo la prueba de recorrido):
       </label>
 
-      <input
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      <textarea
+        class="bg-gray-50 border min-h-24 max-h-48 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         id="design_commments"
         name="design_commments"
         placeholder="Desarrollo paso a paso de la prueba o recorrido -- ó -- Ruta donde guardaste el Video o documento, Ejemplo: MM\GA SERVICIOS\"
-        value="{{ diseño.comentarios_diseño|default:'' }}"
-      />
+      >{{ diseño.comentarios_diseño|default:'' }}</textarea>
     </div>
+    <!-- Información Diseño -->
+
+    <!-- Validaciones de Diseño -->
+    <div class="relative mb-4 overflow-x-auto">
+      <table class="w-full text-sm text-left text-gray-500 rtl:text-right">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              Validaciones de diseño
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Respuesta
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Explicación
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for validacion in validaciones_diseño %}
+            <tr class="bg-white border-b">
+              <td class="px-6 py-4 max-w-48">
+                {{ validacion.pregunta_validacion }}
+              </td>
+
+              <td class="px-6 py-4">
+                <select
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  id="answer"
+                  name="answer"
+                >
+                  <option value="" disabled {% if not encabezado.estado %}selected{% endif %}>Selecciona una respuesta</option>
+                  <option value="Si" {% if encabezado and encabezado.estado == "Sin iniciar" %}selected{% endif %}>Sí</option>
+                  <option value="No" {% if encabezado and encabezado.estado == "Sin iniciar" %}selected{% endif %}>No</option>
+                  <option value="No aplica" {% if encabezado and encabezado.estado == "En proceso" %}selected{% endif %}>No aplica</option>
+                </select>
+              </td>
+
+              <td class="px-6 py-4">
+                <textarea
+                  class="bg-gray-50 border min-h-24 max-h-48 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  id="design_commments"
+                  name="design_commments"
+                  placeholder="---- Justifica tu Respuesta ----"
+                ></textarea>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <!-- Validaciones de Diseño -->
 
     <button
       class="text-white text-center bg-[#050708] hover:bg-[#050708]/90 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 items-center dark:focus:ring-[#050708]/50 me-2 mb-2"
