@@ -161,7 +161,9 @@ def diseño(request, codigo_control):
 def encabezado(request, codigo_control):
     control = get_object_or_404(Controles, codigo_control=codigo_control)
 
-    encabezado = Encabezado.objects.filter(control_id=control).first()
+    encabezado = Encabezado.objects.filter(control_id=control.id).first()
+
+    diseño = Diseño.objects.filter(control_id=control.id).first()
 
     errores = {}
 
@@ -194,6 +196,11 @@ def encabezado(request, codigo_control):
                 ).strftime("%Y-%m-%d")
             except ValueError:
                 errores["production_date"] = "El formato de la fecha es inválido."
+
+        if estado == "Terminado" and (not diseño or not diseño.conclusion_diseño):
+            errores["state"] = (
+                "No se puede guardar como 'Terminado' porque la conclusión del diseño es nula."
+            )
 
         if not errores:
             if encabezado:
