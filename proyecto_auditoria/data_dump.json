@@ -1,0 +1,90 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$PF821BwZCJMiQ5xHBWHgzR$z/zbDANvX9qbBjLUUM5CXWLnKic7qHrdXMWJVvZEiTI=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "auditor",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true
+    }
+  },
+  {
+    "model": "auditoria.auditores",
+    "pk": 1,
+    "fields": {
+      "nombre": "Juan",
+      "apellido": "Pérez",
+      "correo": "juan.perez@example.com",
+      "telefono": "1234567890",
+      "cargo": "Auditor Senior",
+      "area": "Finanzas",
+      "usuario": 1,
+      "fecha_creacion": "2024-11-26",
+      "fecha_actualizacion": "2024-11-26"
+    }
+  },
+  {
+    "model": "auditoria.controles",
+    "pk": 1,
+    "fields": {
+      "nombre_control": "Control de Presupuesto",
+      "codigo_control": "C001",
+      "estado_control": "Activo",
+      "conclusion_control": "Cumple con los objetivos establecidos.",
+      "descripcion_control": "Control para supervisar los gastos.",
+      "frecuencia_control": "Mensual",
+      "clasificacion_control": "Alto impacto",
+      "tipologia_control": "Preventivo",
+      "descripcion_riesgo": "Riesgo de sobrepresupuesto.",
+      "preventivo_detectivo": "Preventivo",
+      "objetivo_control": "Asegurar el cumplimiento del presupuesto.",
+      "auditor": 1,
+      "año_control": 2024,
+      "periodo_control": 1,
+      "fecha_creacion": "2024-11-01",
+      "fecha_actualizacion": "2024-11-01"
+    }
+  },
+  {
+    "model": "auditoria.validaciones_diseño",
+    "pk": 1,
+    "fields": {
+      "pregunta_validacion": "¿El control está correctamente documentado?",
+      "fecha_creacion": "2024-11-01",
+      "fecha_actualizacion": "2024-11-01"
+    }
+  },
+  {
+    "model": "auditoria.validaciones_diseño",
+    "pk": 2,
+    "fields": {
+      "pregunta_validacion": "¿El control cumple con su objetivo y/o mitiga el riesgo asociado?",
+      "fecha_creacion": "2024-11-01",
+      "fecha_actualizacion": "2024-11-01"
+    }
+  },
+  {
+    "model": "auditoria.validaciones_diseño",
+    "pk": 3,
+    "fields": {
+      "pregunta_validacion": "¿Las Aseveraciones relacionadas en el control son las que debidamente aplican a este?",
+      "fecha_creacion": "2024-11-01",
+      "fecha_actualizacion": "2024-11-01"
+    }
+  },
+  {
+    "model": "auditoria.validaciones_diseño",
+    "pk": 4,
+    "fields": {
+      "pregunta_validacion": "¿El control es preciso que brinda suficiente confianza sobre su efectividad?",
+      "fecha_creacion": "2024-11-01",
+      "fecha_actualizacion": "2024-11-01"
+    }
+  }
+]

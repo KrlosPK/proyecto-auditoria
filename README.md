@@ -81,15 +81,26 @@ DB_PORT="5432"
   python .\manage.py createsuperuser
 ```
 
-8: Inicia el servidor de desarrollo:
+8: Inicializa valores por defecto en la base de datos
+
+``` bash
+  python .\manage.py loaddata data_dump.json
+```
+
+9: Inicia el servidor de desarrollo:
 
 ``` bash
   python .\manage.py runserver
 ```
 
-9: [Accede a la aplicación en tu navegador dando click en este enlace](http://127.0.0.1:8000)
+10: [Accede a la aplicación en tu navegador dando click en este enlace](http://127.0.0.1:8000)
 
-## Como usar la aplicación:
+Utiliza las credenciales:
+
+usuario: auditor
+contraseña: pruebatalentob
+
+## Como usar la aplicación
 
 1: [Ingresa a este enlace para gestionar los datos de las tablas](http://127.0.0.1:8000/admin)
 
