@@ -10,7 +10,9 @@ class Auditores(models.Model):
     cargo = models.CharField(max_length=150)
     area = models.CharField(max_length=150)
 
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="usuarios")
+    usuario = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="usuarios"
+    )
 
     fecha_creacion = models.DateField(auto_now_add=True)
     fecha_actualizacion = models.DateField(auto_now=True)
@@ -82,7 +84,7 @@ class Validaciones_Diseño_Diseño(models.Model):
     fecha_actualizacion = models.DateField(auto_now=True)
 
     def __str__(self):
-        return self.validaciones_diseño
+        return self.respuesta_validacion
 
 
 class Encabezado(models.Model):
