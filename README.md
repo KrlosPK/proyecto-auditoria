@@ -97,8 +97,8 @@ DB_PORT="5432"
 
 Utiliza las credenciales:
 
-usuario: auditor
-contraseña: pruebatalentob
+- **usuario:** auditor
+- **contraseña:** pruebatalentob
 
 ## Como usar la aplicación
 
