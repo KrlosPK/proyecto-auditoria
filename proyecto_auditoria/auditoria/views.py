@@ -1,6 +1,8 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
 from .models import Controles, Diseño
+from datetime import datetime
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
 
 
 @login_required(login_url="auth/login_user/")
@@ -21,24 +23,51 @@ def diseño(request, codigo_control):
 
     diseño = Diseño.objects.filter(control_id=control).first()
 
+    errores = {}
+
     if request.method == "POST":
         responsable_diseño = request.POST.get("design_responsible", "")
         comentarios_diseño = request.POST.get("design_commments", "")
         fecha_ejecucion_prueba = request.POST.get("test_execution_date", "")
 
-        if diseño:
-            diseño.responsable_diseño = responsable_diseño
-            diseño.comentarios_diseño = comentarios_diseño
-            diseño.fecha_ejecucion_prueba = fecha_ejecucion_prueba
-        else:
-            diseño = Diseño(
-                control_id=control,
-                responsable_diseño=responsable_diseño,
-                comentarios_diseño=comentarios_diseño,
-                fecha_ejecucion_prueba=fecha_ejecucion_prueba,
+        if not responsable_diseño:
+            errores["design_responsible"] = (
+                "El campo Responsable de Diseño es obligatorio."
             )
+        if not comentarios_diseño:
+            errores["design_commments"] = "El campo Comentarios es obligatorio."
+        if not fecha_ejecucion_prueba:
+            errores["test_execution_date"] = (
+                "La Fecha de Ejecución de la Prueba es obligatoria."
+            )
+        else:
+            try:
+                fecha_ejecucion_prueba = datetime.strptime(
+                    fecha_ejecucion_prueba, "%m/%d/%Y"
+                ).strftime("%Y-%m-%d")
+            except ValueError:
+                errores["test_execution_date"] = "El formato de la fecha es inválido."
 
-        diseño.save()
-        return redirect("diseño", codigo_control=codigo_control)
+        if not errores:
+            if diseño:
+                diseño.responsable_diseño = responsable_diseño
+                diseño.comentarios_diseño = comentarios_diseño
+                diseño.fecha_ejecucion_prueba = fecha_ejecucion_prueba
+            else:
+                diseño = Diseño(
+                    control_id=control,
+                    responsable_diseño=responsable_diseño,
+                    comentarios_diseño=comentarios_diseño,
+                    fecha_ejecucion_prueba=fecha_ejecucion_prueba,
+                )
+            diseño.save()
+            return redirect("diseño", codigo_control=codigo_control)
+        else:
+            messages.error(request, errores)
+            return redirect("diseño", codigo_control=codigo_control)
 
-    return render(request, "diseño.html", {"control": control, "diseño": diseño})
+    return render(
+        request,
+        "diseño.html",
+        {"control": control, "diseño": diseño, "errores": errores},
+    )
