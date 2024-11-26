@@ -61,18 +61,16 @@
         Estado:
       </label>
 
-      {{ encabezado.estado }}
       <select
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         id="state"
         name="state"
-        value="{{ encabezado.estado|default:'' }}"
       >
-        <option value="" disabled selected>Selecciona un estado</option>
-        <option value="Sin iniciar">Sin Iniciar</option>
-        <option value="En proceso">En Proceso</option>
-        <option value="Terminado">Terminado</option>
-        <option value="No Evaluado">No Evaluado</option>
+        <option value="" disabled {% if not encabezado.estado %}selected{% endif %}>Selecciona un estado</option>
+        <option value="Sin iniciar" {% if encabezado and encabezado.estado == "Sin iniciar" %}selected{% endif %}>Sin Iniciar</option>
+        <option value="En proceso" {% if encabezado and encabezado.estado == "En proceso" %}selected{% endif %}>En Proceso</option>
+        <option value="Terminado" {% if encabezado and encabezado.estado == "Terminado" %}selected{% endif %}>Terminado</option>
+        <option value="No Evaluado" {% if encabezado and encabezado.estado == "No Evaluado" %}selected{% endif %}>No Evaluado</option>
       </select>
     </div>
 
@@ -90,7 +88,7 @@
         name="total_hours_invested"
         placeholder="Ingresa un número"
         type="number"
-        value="{{ diseño.total_horas_invertidas|default:'' }}"
+        value="{{ encabezado.total_horas_invertidas|default:'' }}"
       />
     </div>
 
@@ -107,7 +105,7 @@
         id="resources_consulted"
         name="resources_consulted"
         placeholder="Respuesta Obligatoria para dar por finalizado el control"
-        value="{{ diseño.recursos_consultados|default:'' }}"
+        value="{{ encabezado.recursos_consultados|default:'' }}"
       />
     </div>
 
