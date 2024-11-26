@@ -57,7 +57,7 @@ Sigue estos pasos para instalar y ejecutar el proyecto:
 ``` bash
 SECRET_KEY="django-insecure-qjivck_8826q3)yp_-kar-ur)1v)+i1sv@9ut&-n7r856ocyus"
 DB_NAME="<nombre_de_tu_base_de_datos>"
-DB_USER="<usuario>", # Por lo general es `postgres`
+DB_USER="<usuario>"
 DB_PASSWORD="<contraseña>"
 DB_HOST="localhost"
 DB_PORT="5432"
