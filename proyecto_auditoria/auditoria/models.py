@@ -60,7 +60,9 @@ class Diseño(models.Model):
     responsable_diseño = models.CharField(max_length=150)
     comentarios_diseño = models.TextField()
 
-    control = models.ForeignKey(Controles, on_delete=models.CASCADE)
+    control = models.OneToOneField(
+        Controles, on_delete=models.CASCADE, related_name="diseño"
+    )
 
     fecha_creacion = models.DateField(auto_now_add=True)
     fecha_actualizacion = models.DateField(auto_now=True)
@@ -87,7 +89,9 @@ class Encabezado(models.Model):
     total_horas_invertidas = models.IntegerField()
     recursos_consultados = models.TextField()
 
-    control = models.ForeignKey(Controles, on_delete=models.CASCADE)
+    control = models.OneToOneField(
+        Controles, on_delete=models.CASCADE, related_name="encabezado"
+    )
 
     fecha_elaboracion = models.DateField(auto_now_add=True)
     fecha_actualizacion = models.DateField(auto_now=True)
