@@ -63,7 +63,7 @@ DB_HOST="localhost"
 DB_PORT="5432"
 ```
 
-5: Realiza las migraciones:
+5: Cámbiate a la carpeta donde está el proyecto:
 
 ``` bash
   cd proyecto_auditoria
@@ -88,3 +88,18 @@ DB_PORT="5432"
 ```
 
 9: [Accede a la aplicación en tu navegador dando click en este enlace](http://127.0.0.1:8000)
+
+## Como usar la aplicación:
+
+1: [Ingresa a este enlace para gestionar los datos de las tablas](http://127.0.0.1:8000/admin)
+
+2: Debes crear datos en las siguientes tablas para que funcione el aplicativo inicialmente:
+
+- Auditores
+- Controles
+
+Las otras tablas, se van llenando conforme utilizas el aplicativo.
+
+## Diagrama Entidad-Relación
+
+![Diagrama Entidad-Relación](diagrama_entidad_relacion.png)
