@@ -51,6 +51,10 @@ def diseño(request, codigo_control):
         responsable_diseño = request.POST.get("design_responsible", "")
         comentarios_diseño = request.POST.get("design_commments", "")
         fecha_ejecucion_prueba = request.POST.get("test_execution_date", "")
+        respuestas_validaciones_actuales = {
+            validacion.id: request.POST.get(f"answer_{validacion.id}", "").strip()
+            for validacion in validaciones_diseño
+        }
 
         if not responsable_diseño:
             errores["design_responsible"] = (
@@ -69,6 +73,15 @@ def diseño(request, codigo_control):
                 ).strftime("%Y-%m-%d")
             except ValueError:
                 errores["test_execution_date"] = "El formato de la fecha es inválido."
+
+        # # Lógica para mostrar el error en caso de que al menos 1 de las respuesta esté vacía
+        total_respuestas = sum(
+            1 for respuesta in respuestas_validaciones_actuales.values() if respuesta
+        )
+        if 0 < total_respuestas < len(validaciones_diseño):
+            errores["validaciones_incompletas"] = (
+                "Debe completar todas las respuestas o dejarlas todas vacías."
+            )
 
         if not errores:
             if diseño:
