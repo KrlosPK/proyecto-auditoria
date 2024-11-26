@@ -52,19 +52,15 @@ Sigue estos pasos para instalar y ejecutar el proyecto:
 
 - Crea una base de datos en PostgreSQL para el proyecto.
 
-- Actualiza el archivo ```settings.py``` con las credenciales de tu base de datos:
+- Crea un archivo ```.env``` en esta ruta: ```.\proyecto-auditoria\.env``` con las siguientes variables:
 
 ``` bash
-  DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "<nombre_de_tu_base_de_datos>",
-        "USER": "<usuario>", # Por lo general es `postgres`
-        "PASSWORD": "<contraseña>",
-        "HOST": "localhost",
-        "PORT": "5432",
-    }
-  }
+SECRET_KEY="django-insecure-qjivck_8826q3)yp_-kar-ur)1v)+i1sv@9ut&-n7r856ocyus"
+DB_NAME="<nombre_de_tu_base_de_datos>"
+DB_USER="<usuario>", # Por lo general es `postgres`
+DB_PASSWORD="<contraseña>"
+DB_HOST="localhost"
+DB_PORT="5432"
 ```
 
 5: Realiza las migraciones:
