@@ -1,15 +1,13 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from django.contrib import messages
 from datetime import datetime
+from django.contrib import messages
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.shortcuts import render, redirect
 
 
 def redirect_if_authenticated(view_func):
     def wrapper(request, *args, **kwargs):
-        if request.user.is_authenticated:  # Verifica si el usuario ya inició sesión
-            return redirect(
-                "home"
-            )  # Cambia "home" por la URL a la que quieres redirigir
+        if request.user.is_authenticated:
+            return redirect("home")
         return view_func(request, *args, **kwargs)
 
     return wrapper
@@ -33,7 +31,6 @@ def login_user(request):
             return redirect("home")
         else:
             messages.success(request, "Usuario o contraseña incorrectos")
-            # I don't want to redirect to the home page, I want to stay in the login page
             return redirect("login")
     else:
         current_year = datetime.now().year
