@@ -60,6 +60,7 @@ class Diseño(models.Model):
     responsable_diseño = models.CharField(max_length=150)
     comentarios_diseño = models.TextField()
     fecha_ejecucion_prueba = models.DateField(null=True)
+    conclusion_diseño = models.CharField(max_length=20)
 
     control = models.OneToOneField(
         Controles, on_delete=models.CASCADE, related_name="diseño"
