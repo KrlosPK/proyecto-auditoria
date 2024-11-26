@@ -31,6 +31,20 @@ def diseño(request, codigo_control):
 
     validaciones_diseño = Validaciones_Diseño.objects.all()
 
+    respuestas_validaciones = Validaciones_Diseño_Diseño.objects.filter(diseño=diseño)
+
+    validaciones_con_respuestas = []
+    for validacion in validaciones_diseño:
+        respuesta = respuestas_validaciones.filter(
+            validaciones_diseño=validacion
+        ).first()
+        validaciones_con_respuestas.append(
+            {
+                "validacion": validacion,
+                "respuesta": respuesta,
+            }
+        )
+
     errores = {}
 
     if request.method == "POST":
@@ -115,7 +129,7 @@ def diseño(request, codigo_control):
             "control": control,
             "diseño": diseño,
             "errores": errores,
-            "validaciones_diseño": validaciones_diseño,
+            "validaciones_con_respuestas": validaciones_con_respuestas,
         },
     )
 

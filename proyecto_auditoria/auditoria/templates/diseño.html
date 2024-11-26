@@ -105,32 +105,40 @@
           </tr>
         </thead>
         <tbody>
-          {% for validacion in validaciones_diseño %}
+          {% for item in validaciones_con_respuestas %}
             <tr class="bg-white border-b">
               <td class="px-6 py-4 max-w-48">
-                {{ validacion.pregunta_validacion }}
+                {{ item.validacion.pregunta_validacion }}
               </td>
 
               <td class="px-6 py-4">
                 <select
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  id="answer_{{ validacion.id }}"
-                  name="answer_{{ validacion.id }}"
+                  id="answer_{{ item.validacion.id }}"
+                  name="answer_{{ item.validacion.id }}"
                 >
-                  <option value="" disabled selected>Selecciona una respuesta</option>
-                  <option value="Si">Sí</option>
-                  <option value="No">No</option>
-                  <option value="No aplica">No aplica</option>
+                  <option value="" disabled {% if not item.respuesta %}selected{% endif %}>
+                    Selecciona una respuesta
+                  </option>
+                  <option value="Si" {% if item.respuesta and item.respuesta.respuesta_validacion == "Si" %}selected{% endif %}>
+                      Sí
+                  </option>
+                  <option value="No" {% if item.respuesta and item.respuesta.respuesta_validacion == "No" %}selected{% endif %}>
+                      No
+                  </option>
+                  <option value="No aplica" {% if item.respuesta and item.respuesta.respuesta_validacion == "No aplica" %}selected{% endif %}>
+                      No aplica
+                  </option>
                 </select>
               </td>
 
               <td class="px-6 py-4">
                 <textarea
                   class="bg-gray-50 border min-h-24 max-h-48 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  id="explanation_{{ validacion.id }}"
-                  name="explanation_{{ validacion.id }}"
+                  id="explanation_{{ item.validacion.id }}"
+                  name="explanation_{{ item.validacion.id }}"
                   placeholder="---- Justifica tu Respuesta ----"
-                ></textarea>
+                >{% if item.respuesta %}{{ item.respuesta.explicacion_validacion }}{% else %}{% endif %}</textarea>
               </td>
             </tr>
           {% endfor %}
