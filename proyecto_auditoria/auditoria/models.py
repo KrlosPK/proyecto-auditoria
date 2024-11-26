@@ -46,8 +46,6 @@ class Controles(models.Model):
 
 class Validaciones_Diseño(models.Model):
     pregunta_validacion = models.CharField(max_length=150)
-    respuesta_validacion = models.CharField(max_length=10, blank=True)
-    explicacion_validacion = models.TextField()
 
     fecha_creacion = models.DateField(auto_now_add=True)
     fecha_actualizacion = models.DateField(auto_now=True)
@@ -77,6 +75,8 @@ class Validaciones_Diseño_Diseño(models.Model):
         Validaciones_Diseño, on_delete=models.CASCADE
     )
     diseño = models.ForeignKey(Diseño, on_delete=models.CASCADE)
+    respuesta_validacion = models.CharField(max_length=10)
+    explicacion_validacion = models.TextField()
 
     fecha_creacion = models.DateField(auto_now_add=True)
     fecha_actualizacion = models.DateField(auto_now=True)
