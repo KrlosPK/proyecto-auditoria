@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Controles
 
@@ -13,3 +13,9 @@ def all_controles(request):
     ).order_by("id")
 
     return render(request, "controles.html", {"controles": controles_list})
+
+
+@login_required(login_url="auth/login_user/")
+def diseño(request, codigo_control):
+    control = get_object_or_404(Controles, codigo_control=codigo_control)
+    return render(request, "diseño.html", {"control": control})

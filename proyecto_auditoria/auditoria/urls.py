@@ -3,4 +3,5 @@ from . import views
 
 urlpatterns = [
     path("", views.all_controles, name="home"),
+    path("diseño/<str:codigo_control>", views.diseño, name="diseño"),
 ]

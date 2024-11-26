@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2 class="text-center text-3xl font-bold mb-4">Prueba de Diseño</h2>
+
+  <!-- Control Data -->
+  <div class="p-6 shadow-md border-gray-200 rounded-lg dark:border-gray-700 mb-4">
+    <ul>
+      <li class="flex flex-col gap-1 mb-2">
+        <b>ID:</b> <span>{{ control.codigo_control }}</span>
+      </li>
+
+      <li class="flex flex-col gap-1 mb-2">
+        <b>Nombre:</b> <span>{{ control.nombre_control }}</span>
+      </li>
+
+      <li class="flex flex-col gap-1 mb-2">
+        <b>Descripción:</b> <span>{{ control.descripcion_control }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <h2 class="text-center text-3xl font-bold mb-4">Ingresa aquí tu información</h2>
+
+  <form action="" method="post">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label
+        for="username"
+        class="block mb-2 text-sm font-medium text-gray-900"
+      >
+        Fecha ejecución de la prueba:
+      </label>
+
+      <div class="relative max-w-sm">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+          <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+          </svg>
+        </div>
+
+        <input datepicker id="default-datepicker" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5" placeholder="Select date">
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label
+        for="design_responsible"
+        class="block mb-2 text-sm font-medium text-gray-900"
+      >
+        Nombre/Cargo/Area con quien se ejecutó la prueba:
+      </label>
+
+      <input
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        id="design_responsible"
+        name="design_responsible"
+        placeholder="Ingrese Nombre - Cargo y Gerencia con quien ejecuta la prueba"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label
+        for="design_commments"
+        class="block mb-2 text-sm font-medium text-gray-900"
+      >
+        Comentarios sobre prueba de recorrido (resultados consulta en el portal de procesos sobre la documentación del control e Indicar la fecha/transacción/movimiento con la que se hizo la prueba de recorrido):
+      </label>
+
+      <input
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        id="design_commments"
+        name="design_commments"
+        placeholder="Desarrollo paso a paso de la prueba o recorrido -- ó -- Ruta donde guardaste el Video o documento, Ejemplo: MM\GA SERVICIOS\"
+      />
+    </div>
+  </form>
+{% endblock %}
