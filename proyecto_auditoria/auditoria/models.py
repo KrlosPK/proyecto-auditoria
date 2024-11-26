@@ -59,6 +59,7 @@ class Validaciones_Diseño(models.Model):
 class Diseño(models.Model):
     responsable_diseño = models.CharField(max_length=150)
     comentarios_diseño = models.TextField()
+    fecha_ejecucion_prueba = models.DateField(null=True)
 
     control = models.OneToOneField(
         Controles, on_delete=models.CASCADE, related_name="diseño"

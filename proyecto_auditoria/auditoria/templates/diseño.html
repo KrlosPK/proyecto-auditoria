@@ -27,7 +27,7 @@
 
     <div class="mb-3">
       <label
-        for="username"
+        for="test_execution_date"
         class="block mb-2 text-sm font-medium text-gray-900"
       >
         Fecha ejecución de la prueba:
@@ -40,7 +40,14 @@
           </svg>
         </div>
 
-        <input datepicker id="default-datepicker" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5" placeholder="Select date">
+        <input
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5" placeholder="Select date"
+          datepicker
+          id="test_execution_date"
+          name="test_execution_date"
+          type="text"
+          value="{{ diseño.fecha_ejecucion_prueba|date:'m/d/Y' }}"
+        >
       </div>
     </div>
 
@@ -57,6 +64,7 @@
         id="design_responsible"
         name="design_responsible"
         placeholder="Ingrese Nombre - Cargo y Gerencia con quien ejecuta la prueba"
+        value="{{ diseño.responsable_diseño|default:'' }}"
       />
     </div>
 
@@ -73,7 +81,18 @@
         id="design_commments"
         name="design_commments"
         placeholder="Desarrollo paso a paso de la prueba o recorrido -- ó -- Ruta donde guardaste el Video o documento, Ejemplo: MM\GA SERVICIOS\"
+        value="{{ diseño.comentarios_diseño|default:'' }}"
       />
     </div>
+
+    <button
+      class="text-white text-center bg-[#050708] hover:bg-[#050708]/90 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 items-center dark:focus:ring-[#050708]/50 me-2 mb-2"
+    >
+      {% if diseño %}
+        Actualizar
+      {% else %}
+        Guardar
+      {% endif%}
+    </button>
   </form>
 {% endblock %}

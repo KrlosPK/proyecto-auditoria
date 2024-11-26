@@ -1,6 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Controles
+from .models import Controles, Diseño
 
 
 @login_required(login_url="auth/login_user/")
@@ -18,4 +18,27 @@ def all_controles(request):
 @login_required(login_url="auth/login_user/")
 def diseño(request, codigo_control):
     control = get_object_or_404(Controles, codigo_control=codigo_control)
-    return render(request, "diseño.html", {"control": control})
+
+    diseño = Diseño.objects.filter(control_id=control).first()
+
+    if request.method == "POST":
+        responsable_diseño = request.POST.get("design_responsible", "")
+        comentarios_diseño = request.POST.get("design_commments", "")
+        fecha_ejecucion_prueba = request.POST.get("test_execution_date", "")
+
+        if diseño:
+            diseño.responsable_diseño = responsable_diseño
+            diseño.comentarios_diseño = comentarios_diseño
+            diseño.fecha_ejecucion_prueba = fecha_ejecucion_prueba
+        else:
+            diseño = Diseño(
+                control_id=control,
+                responsable_diseño=responsable_diseño,
+                comentarios_diseño=comentarios_diseño,
+                fecha_ejecucion_prueba=fecha_ejecucion_prueba,
+            )
+
+        diseño.save()
+        return redirect("diseño", codigo_control=codigo_control)
+
+    return render(request, "diseño.html", {"control": control, "diseño": diseño})
