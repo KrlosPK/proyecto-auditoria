@@ -75,25 +75,19 @@ DB_PORT="5432"
   python .\manage.py migrate
 ```
 
-7: Crea un superusuario:
-
-``` bash
-  python .\manage.py createsuperuser
-```
-
-8: Inicializa valores por defecto en la base de datos
+7: Inicializa valores por defecto en la base de datos
 
 ``` bash
   python .\manage.py loaddata data_dump.json
 ```
 
-9: Inicia el servidor de desarrollo:
+8: Inicia el servidor de desarrollo:
 
 ``` bash
   python .\manage.py runserver
 ```
 
-10: [Accede a la aplicación en tu navegador dando click en este enlace](http://127.0.0.1:8000)
+9: [Accede a la aplicación en tu navegador dando click en este enlace](http://127.0.0.1:8000)
 
 Utiliza las credenciales:
 
