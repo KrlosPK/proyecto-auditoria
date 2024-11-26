@@ -53,17 +53,25 @@ def diseño(request, codigo_control):
                 diseño.responsable_diseño = responsable_diseño
                 diseño.comentarios_diseño = comentarios_diseño
                 diseño.fecha_ejecucion_prueba = fecha_ejecucion_prueba
+
+                messages.success(request, "Diseño actualizado exitosamente.")
+
             else:
                 diseño = Diseño(
-                    control_id=control,
+                    control_id=control.id,
                     responsable_diseño=responsable_diseño,
                     comentarios_diseño=comentarios_diseño,
                     fecha_ejecucion_prueba=fecha_ejecucion_prueba,
                 )
+
+                messages.success(request, "Diseño creado exitosamente.")
             diseño.save()
             return redirect("diseño", codigo_control=codigo_control)
         else:
-            messages.error(request, errores)
+            errores_formateados = "\n".join(errores.values())
+
+            messages.error(request, errores_formateados)
+
             return redirect("diseño", codigo_control=codigo_control)
 
     return render(
