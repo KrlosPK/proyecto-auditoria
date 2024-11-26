@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2 class="text-center text-3xl font-bold mb-4">Encabezado del Control</h2>
+  <h2 class="mb-4 text-3xl font-bold text-center">Encabezado del Control</h2>
 
   <!-- Control Data -->
-  <div class="p-6 shadow-md border-gray-200 rounded-lg dark:border-gray-700 mb-4">
+  <div class="p-6 mb-4 border-gray-200 rounded-lg shadow-md dark:border-gray-700">
     <ul>
       <li class="flex flex-col gap-1 mb-2">
         <b>ID:</b> <span>{{ control.codigo_control }}</span>
@@ -20,76 +20,78 @@
     </ul>
   </div>
 
-  <h2 class="text-center text-3xl font-bold mb-4">Ingresa aquí tu información</h2>
+  <h2 class="mb-4 text-3xl font-bold text-center">Ingresa aquí tu información</h2>
 
   <form method="post">
     {% csrf_token %}
 
-    <div class="mb-3">
-      <label
-        for="production_date"
-        class="block mb-2 text-sm font-medium text-gray-900"
-      >
-        Fecha Elaboración:
-      </label>
+    <div class="flex flex-wrap gap-4">
+      <div class="mb-3 grow">
+        <label
+          for="production_date"
+          class="block mb-2 text-sm font-medium text-gray-900"
+        >
+          Fecha Elaboración:
+        </label>
 
-      <div class="relative max-w-sm">
-        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-          <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-          </svg>
+        <div class="relative max-w-sm">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+            </svg>
+          </div>
+
+          <input
+            autocomplete="off"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+            datepicker
+            id="production_date"
+            name="production_date"
+            placeholder="mm/dd/yyyy"
+            type="text"
+            value="{{ encabezado.fecha_elaboracion|date:'m/d/Y' }}"
+          >
         </div>
+      </div>
+
+      <div class="mb-3 grow">
+        <label
+          for="state"
+          class="block mb-2 text-sm font-medium text-gray-900"
+        >
+          Estado:
+        </label>
+
+        <select
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          id="state"
+          name="state"
+        >
+          <option value="" disabled {% if not encabezado.estado %}selected{% endif %}>Selecciona un estado</option>
+          <option value="Sin iniciar" {% if encabezado and encabezado.estado == "Sin iniciar" %}selected{% endif %}>Sin Iniciar</option>
+          <option value="En proceso" {% if encabezado and encabezado.estado == "En proceso" %}selected{% endif %}>En Proceso</option>
+          <option value="Terminado" {% if encabezado and encabezado.estado == "Terminado" %}selected{% endif %}>Terminado</option>
+          <option value="No Evaluado" {% if encabezado and encabezado.estado == "No Evaluado" %}selected{% endif %}>No Evaluado</option>
+        </select>
+      </div>
+
+      <div class="mb-3 grow">
+        <label
+          for="total_hours_invested"
+          class="block mb-2 text-sm font-medium text-gray-900"
+        >
+          Total Horas invertidas:
+        </label>
 
         <input
-          autocomplete="off"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
-          datepicker
-          id="production_date"
-          name="production_date"
-          placeholder="mm/dd/yyyy"
-          type="text"
-          value="{{ encabezado.fecha_elaboracion|date:'m/d/Y' }}"
-        >
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          id="total_hours_invested"
+          name="total_hours_invested"
+          placeholder="Ingresa un número"
+          type="number"
+          value="{{ encabezado.total_horas_invertidas|default:'' }}"
+        />
       </div>
-    </div>
-
-    <div class="mb-3">
-      <label
-        for="state"
-        class="block mb-2 text-sm font-medium text-gray-900"
-      >
-        Estado:
-      </label>
-
-      <select
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        id="state"
-        name="state"
-      >
-        <option value="" disabled {% if not encabezado.estado %}selected{% endif %}>Selecciona un estado</option>
-        <option value="Sin iniciar" {% if encabezado and encabezado.estado == "Sin iniciar" %}selected{% endif %}>Sin Iniciar</option>
-        <option value="En proceso" {% if encabezado and encabezado.estado == "En proceso" %}selected{% endif %}>En Proceso</option>
-        <option value="Terminado" {% if encabezado and encabezado.estado == "Terminado" %}selected{% endif %}>Terminado</option>
-        <option value="No Evaluado" {% if encabezado and encabezado.estado == "No Evaluado" %}selected{% endif %}>No Evaluado</option>
-      </select>
-    </div>
-
-    <div class="mb-3">
-      <label
-        for="total_hours_invested"
-        class="block mb-2 text-sm font-medium text-gray-900"
-      >
-        Total Horas invertidas:
-      </label>
-
-      <input
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        id="total_hours_invested"
-        name="total_hours_invested"
-        placeholder="Ingresa un número"
-        type="number"
-        value="{{ encabezado.total_horas_invertidas|default:'' }}"
-      />
     </div>
 
     <div class="mb-3">
@@ -100,13 +102,12 @@
         Recursos Consultados:
       </label>
 
-      <input
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      <textarea
+        class="bg-gray-50 border min-h-24 max-h-48 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         id="resources_consulted"
         name="resources_consulted"
         placeholder="Respuesta Obligatoria para dar por finalizado el control"
-        value="{{ encabezado.recursos_consultados|default:'' }}"
-      />
+      >{{ encabezado.recursos_consultados|default:'' }}</textarea>
     </div>
 
     <button
